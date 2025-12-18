@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>マイクロプラスチック・デトックス講義（文字サイズ調整版）</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #0f172a; /* Slate 900 */
+            color: #333;
+            overflow: hidden; /* Prevent scrolling */
+        }
+        
+        /* 16:9 Aspect Ratio Container */
+        .slide-container {
+            aspect-ratio: 16 / 9;
+            width: 100%;
+            max-width: 1100px;
+            height: auto;
+            max-height: 90vh;
+            background: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        /* --- Fullscreen Styles --- */
+        .slide-container:fullscreen, 
+        .slide-container:-webkit-full-screen,
+        .pseudo-fullscreen {
+            width: 100vw !important;
+            height: 100vh !important;
+            max-width: none !important;
+            max-height: none !important;
+            aspect-ratio: auto !important;
+            border-radius: 0 !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            position: fixed !important;
+            top: 0;
+            left: 0;
+            z-index: 99999;
+        }
+
+        /* Slide Content Adjustments */
+        .slide-container:fullscreen .slide,
+        .slide-container:-webkit-full-screen .slide,
+        .slide-container.pseudo-fullscreen .slide {
+            height: 100%;
+            width: 100%;
+            max-width: 100%;
+            padding: 4vh 5vw; /* 余白を確保 */
+            overflow-y: auto; /* コンテンツが溢れたらスクロール */
+        }
+
+        .slide {
+            display: none;
+            height: 100%;
+            width: 100%;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Text & Layout Utilities */
+        .text-shadow {
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .marker-yellow {
+            background: linear-gradient(transparent 60%, #fef08a 60%);
+        }
+
+        /* Tech Background */
+        .tech-bg {
+            background-color: #ffffff;
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(45deg, #2563eb, #db2777);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Animation */
+        .float-anim {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen p-4">
+
+    <!-- Controls -->
+    <div class="mb-6 flex items-center gap-4 text-white z-10 flex-wrap justify-center">
+        <button onclick="prevSlide()" class="px-6 py-3 bg-slate-700 hover:bg-slate-600 rounded-full font-bold transition shadow-lg cursor-pointer">
+            <i class="fas fa-chevron-left"></i> 戻る
+        </button>
+        <span id="slide-indicator" class="font-mono text-xl font-bold mx-4">01 / 08</span>
+        <button onclick="nextSlide()" class="px-6 py-3 bg-blue-600 hover:bg-blue-500 rounded-full font-bold transition shadow-lg cursor-pointer">
+            進む <i class="fas fa-chevron-right"></i>
+        </button>
+        <div class="w-px h-8 bg-slate-600 mx-2 hidden md:block"></div>
+        <button onclick="toggleFullScreen()" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-500 rounded-full font-bold transition shadow-lg cursor-pointer border border-indigo-400">
+            <i class="fas fa-expand"></i> 全画面
+        </button>
+    </div>
+
+    <!-- Main Container -->
+    <div class="slide-container" id="slide-viewer">
+
+        <!-- Slide 1: Title -->
+        <div class="slide active bg-slate-900 text-white relative">
+            <div class="absolute inset-0 overflow-hidden pointer-events-none">
+                <div class="absolute top-[-10%] right-[-10%] w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-50 z-0"></div>
+                <div class="absolute bottom-[-10%] left-[-10%] w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-50 z-0"></div>
+            </div>
+            
+            <div class="z-10 text-center relative w-full max-w-5xl px-4">
+                <p class="text-xl md:text-2xl font-bold text-blue-300 tracking-widest mb-6">最新科学 × デトックス</p>
+                <h1 class="text-4xl md:text-6xl font-black leading-tight mb-10 text-shadow">
+                    マイクロプラスチックを<br>
+                    <span class="gradient-text">「排出」</span>せよ
+                </h1>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <span class="px-4 py-2 bg-yellow-500 text-black font-bold rounded-full text-sm md:text-lg">黒酵母</span>
+                    <span class="px-4 py-2 bg-blue-500 font-bold rounded-full text-sm md:text-lg">ナノバイオ</span>
+                    <span class="px-4 py-2 bg-green-500 font-bold rounded-full text-sm md:text-lg">腸内環境</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: The Problem -->
+        <div class="slide bg-white">
+            <h2 class="absolute top-6 left-6 md:top-10 md:left-12 text-2xl md:text-4xl font-black text-slate-800 border-l-8 border-red-500 pl-4 z-20">見えない脅威</h2>
+            
+            <div class="flex flex-col md:flex-row items-center justify-center w-full h-full gap-8 md:gap-16 mt-12 z-10 px-4">
+                <!-- Card Icon -->
+                <div class="flex flex-col items-center flex-shrink-0">
+                    <div class="relative mb-4">
+                        <i class="fas fa-credit-card text-7xl md:text-9xl text-slate-300"></i>
+                        <i class="fas fa-ban text-red-500 text-4xl md:text-6xl absolute -bottom-4 -right-4 bg-white rounded-full"></i>
+                    </div>
+                    <p class="text-xl md:text-3xl font-bold text-center">
+                        1週間で <span class="text-red-600 text-3xl md:text-5xl">5g</span> 摂取
+                    </p>
+                </div>
+
+                <!-- Arrow -->
+                <i class="fas fa-arrow-right text-3xl md:text-6xl text-gray-300 transform rotate-90 md:rotate-0"></i>
+
+                <!-- Box -->
+                <div class="bg-red-50 p-6 md:p-8 rounded-2xl border-2 border-red-100 text-center shadow-lg w-full md:w-auto max-w-md">
+                    <i class="fas fa-biohazard text-4xl md:text-6xl text-red-500 mb-4 animate-pulse"></i>
+                    <h3 class="text-2xl md:text-4xl font-black text-slate-800 mb-2">腸内汚染</h3>
+                    <p class="text-lg md:text-xl font-bold text-slate-600">
+                        <i class="fas fa-exclamation-triangle text-red-500 mr-2"></i>炎症 (リーキーガット)<br>
+                        <i class="fas fa-arrow-down text-blue-500 mr-2"></i>免疫力の低下
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: The Savior (サイズ修正箇所) -->
+        <div class="slide bg-slate-50">
+            <h2 class="absolute top-6 left-6 md:top-10 md:left-12 text-2xl md:text-4xl font-black text-slate-800 border-l-8 border-yellow-500 pl-4 z-20">救世主：黒酵母βグルカン</h2>
+            
+            <div class="flex flex-col md:flex-row w-full h-full items-center justify-center gap-8 md:gap-16 px-4 mt-8 z-10">
+                <!-- Image -->
+                <div class="flex-shrink-0">
+                    <div class="relative w-40 h-40 md:w-64 md:h-64 bg-yellow-100 rounded-full flex items-center justify-center border-4 border-yellow-300 shadow-xl float-anim">
+                        <i class="fas fa-network-wired text-6xl md:text-8xl text-yellow-600 opacity-80"></i>
+                        <span class="absolute -bottom-4 bg-yellow-500 text-white px-4 py-1 rounded-full font-bold text-sm md:text-xl shadow-lg">ジェル状の網目</span>
+                    </div>
+                </div>
+
+                <!-- Text (サイズ縮小済み) -->
+                <div class="space-y-4 md:space-y-6 max-w-xl text-center md:text-left">
+                    <h3 class="text-2xl md:text-4xl font-black text-slate-800 leading-relaxed">
+                        <span class="marker-yellow px-1">「吸着」</span>して離さない
+                    </h3>
+                    <p class="text-base md:text-xl text-slate-600 font-bold leading-relaxed">
+                        複雑な立体構造を持つ<br>
+                        <span class="text-blue-600">水溶性β-1,3-1,6グルカン</span>が<br>
+                        腸内でスポンジのように働く。
+                    </p>
+                    <div class="flex flex-col gap-3 mt-4">
+                        <div class="bg-white p-3 md:p-4 rounded-xl shadow border border-slate-200 flex items-center justify-center md:justify-start gap-3">
+                            <i class="fas fa-magnet text-xl md:text-2xl text-blue-500"></i>
+                            <span class="text-base md:text-lg font-bold">ゴミをキャッチ</span>
+                        </div>
+                        <div class="bg-white p-3 md:p-4 rounded-xl shadow border border-slate-200 flex items-center justify-center md:justify-start gap-3">
+                            <i class="fas fa-shield-virus text-xl md:text-2xl text-green-500"></i>
+                            <span class="text-base md:text-lg font-bold">免疫スイッチON</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Prof Koumoto's Science -->
+        <div class="slide tech-bg">
+            <h2 class="absolute top-6 left-6 md:top-10 md:left-12 text-2xl md:text-4xl font-black text-blue-900 border-l-8 border-blue-600 pl-4 z-20">甲南大学・甲元教授の技術</h2>
+            
+            <div class="flex flex-col items-center justify-center w-full h-full mt-16 px-4 z-10">
+                <div class="flex flex-wrap justify-center gap-3 mb-6">
+                    <span class="bg-blue-600 text-white px-4 py-1 rounded-full font-bold text-sm md:text-lg">Nanobiotechnology</span>
+                    <span class="bg-slate-800 text-white px-4 py-1 rounded-full font-bold text-sm md:text-lg">Molecular Recognition</span>
+                </div>
+
+                <div class="bg-white p-6 md:p-10 rounded-3xl shadow-2xl border border-blue-100 w-full max-w-5xl relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-3 h-full bg-blue-500"></div>
+                    <h3 class="text-xl md:text-3xl font-black mb-6 text-slate-800 text-center">なぜ「吸着」できるのか？</h3>
+                    
+                    <!-- 3 Step Flow -->
+                    <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                        <div class="flex flex-col items-center w-full">
+                            <i class="fas fa-microscope text-4xl md:text-6xl text-blue-400 mb-2"></i>
+                            <p class="text-base md:text-xl font-bold">ナノレベル設計</p>
+                        </div>
+                        
+                        <i class="fas fa-arrow-right text-2xl text-gray-300 transform rotate-90 md:rotate-0"></i>
+                        
+                        <div class="flex flex-col items-center w-full">
+                            <i class="fas fa-hand-holding text-4xl md:text-6xl text-blue-600 mb-2"></i>
+                            <p class="text-base md:text-xl font-bold">分子認識能</p>
+                            <p class="text-xs md:text-sm text-gray-500 font-bold">（特定物質を認識）</p>
+                        </div>
+                        
+                        <i class="fas fa-arrow-right text-2xl text-gray-300 transform rotate-90 md:rotate-0"></i>
+                        
+                        <div class="flex flex-col items-center w-full">
+                            <i class="fas fa-trash-alt text-4xl md:text-6xl text-green-500 mb-2"></i>
+                            <p class="text-base md:text-xl font-bold">無害化して排出</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Mechanism -->
+        <div class="slide bg-slate-900 text-white">
+            <h2 class="absolute top-6 left-6 md:top-10 md:left-12 text-2xl md:text-4xl font-black text-white border-l-8 border-green-500 pl-4 z-20">デトックスの仕組み</h2>
+            
+            <div class="relative w-full max-w-5xl bg-slate-800 rounded-3xl border border-slate-700 mt-16 p-6 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 z-10">
+                
+                <!-- Step 1 -->
+                <div class="flex flex-col items-center w-full">
+                    <div class="flex gap-2 mb-2">
+                        <div class="w-3 h-3 bg-red-500 rounded-full animate-bounce"></div>
+                        <div class="w-3 h-3 bg-red-500 rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
+                    </div>
+                    <p class="text-base md:text-lg font-bold text-red-400">プラスチック</p>
+                </div>
+
+                <i class="fas fa-chevron-right text-2xl text-slate-500 transform rotate-90 md:rotate-0"></i>
+
+                <!-- Step 2 (Center) -->
+                <div class="flex flex-col items-center w-full">
+                    <div class="w-24 h-24 md:w-32 md:h-32 bg-yellow-500/20 rounded-full flex items-center justify-center border-2 border-yellow-500/50 relative">
+                         <div class="absolute w-2 h-2 bg-red-500 rounded-full top-6 left-6"></div>
+                        <i class="fas fa-network-wired text-4xl md:text-5xl text-yellow-400"></i>
+                    </div>
+                    <p class="text-lg md:text-xl font-bold text-yellow-400 mt-2">βグルカンが包囲</p>
+                </div>
+
+                <i class="fas fa-chevron-right text-2xl text-slate-500 transform rotate-90 md:rotate-0"></i>
+
+                <!-- Step 3 -->
+                <div class="flex flex-col items-center w-full">
+                    <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mb-2">
+                        <i class="fas fa-arrow-down text-2xl text-white"></i>
+                    </div>
+                    <p class="text-base md:text-lg font-bold text-green-400">便として排出</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Action Plan -->
+        <div class="slide bg-white">
+            <h2 class="text-3xl md:text-5xl font-black text-center mb-8 text-slate-800 z-20">
+                今日からできる<span class="text-blue-600">Action</span>
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-5xl z-10 px-4 pb-4">
+                <!-- Action 1 -->
+                <div class="bg-slate-50 p-6 rounded-2xl shadow-lg flex flex-col items-center border-b-8 border-blue-500">
+                    <i class="fas fa-wine-bottle text-3xl text-blue-600 mb-4"></i>
+                    <h3 class="text-lg md:text-xl font-black mb-2 text-slate-700">入れない</h3>
+                    <p class="text-center text-gray-500 text-sm md:text-base font-bold">ペットボトル削減<br>天然繊維を選ぶ</p>
+                </div>
+                <!-- Action 2 -->
+                <div class="bg-slate-50 p-6 rounded-2xl shadow-lg flex flex-col items-center border-b-8 border-yellow-500 transform md:scale-105">
+                    <i class="fas fa-capsules text-3xl text-yellow-600 mb-4"></i>
+                    <h3 class="text-lg md:text-xl font-black mb-2 text-slate-700">摂取する</h3>
+                    <p class="text-center text-gray-500 text-sm md:text-base font-bold"><span class="text-yellow-600">黒酵母βグルカン</span><br>きのこ・海藻類</p>
+                </div>
+                <!-- Action 3 -->
+                <div class="bg-slate-50 p-6 rounded-2xl shadow-lg flex flex-col items-center border-b-8 border-green-500">
+                    <i class="fas fa-toilet text-3xl text-green-600 mb-4"></i>
+                    <h3 class="text-lg md:text-xl font-black mb-2 text-slate-700">出し切る</h3>
+                    <p class="text-center text-gray-500 text-sm md:text-base font-bold">便秘は最大の敵<br>腸の動きを活性化</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Summary -->
+        <div class="slide bg-gradient-to-br from-blue-900 to-slate-900 text-white">
+            <div class="border-4 border-white/20 p-8 rounded-3xl backdrop-blur-md max-w-4xl w-full text-center shadow-2xl z-10">
+                <h2 class="text-3xl md:text-5xl font-black mb-8">Summary</h2>
+                <div class="space-y-4 text-left inline-block">
+                    <div class="flex items-start gap-4">
+                        <i class="fas fa-check-circle text-green-400 text-2xl md:text-3xl mt-1"></i>
+                        <span class="text-lg md:text-2xl font-bold">MPs対策は「腸」が最前線</span>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <i class="fas fa-check-circle text-green-400 text-2xl md:text-3xl mt-1"></i>
+                        <span class="text-lg md:text-2xl font-bold">黒酵母βグルカンの吸着力</span>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <i class="fas fa-check-circle text-green-400 text-2xl md:text-3xl mt-1"></i>
+                        <span class="text-lg md:text-2xl font-bold">ナノバイオ技術の裏付け</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: End -->
+        <div class="slide bg-white flex items-center justify-center text-center">
+            <div class="max-w-4xl px-4 z-10">
+                <div class="mb-6 relative inline-block">
+                    <i class="fas fa-leaf text-8xl md:text-9xl text-green-500"></i>
+                    <i class="fas fa-shield-alt text-4xl md:text-6xl text-blue-500 absolute -bottom-2 -right-2 bg-white rounded-full border-4 border-white"></i>
+                </div>
+                <h2 class="text-5xl md:text-7xl font-black text-slate-800 mb-6">Thank You</h2>
+                <p class="text-xl md:text-3xl text-gray-500 font-bold">
+                    未来の体は、今の<span class="text-blue-600">「排出」</span>で作られる。
+                </p>
+            </div>
+        </div>
+
+    </div>
+    
+    <p class="text-slate-500 mt-4 text-sm font-mono opacity-50">
+        [Esc]キーで全画面解除
+    </p>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const indicator = document.getElementById('slide-indicator');
+        const slideContainer = document.getElementById('slide-viewer');
+
+        function updateSlide() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                }
+            });
+            const currentStr = String(currentSlide + 1).padStart(2, '0');
+            const totalStr = String(slides.length).padStart(2, '0');
+            indicator.innerText = `${currentStr} / ${totalStr}`;
+        }
+
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+
+        // --- Robust Full Screen Toggle Function ---
+        function toggleFullScreen() {
+            try {
+                if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+                    // Try native first
+                    if (slideContainer.requestFullscreen) {
+                        slideContainer.requestFullscreen().catch(enablePseudoFullScreen);
+                    } else if (slideContainer.webkitRequestFullscreen) {
+                        slideContainer.webkitRequestFullscreen().catch(enablePseudoFullScreen);
+                    } else if (slideContainer.msRequestFullscreen) {
+                        slideContainer.msRequestFullscreen().catch(enablePseudoFullScreen);
+                    } else {
+                        enablePseudoFullScreen();
+                    }
+                } else {
+                    // Exit
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen().catch(disablePseudoFullScreen);
+                    } else if (document.webkitExitFullscreen) {
+                        document.webkitExitFullscreen().catch(disablePseudoFullScreen);
+                    } else if (document.msExitFullscreen) {
+                        document.msExitFullscreen().catch(disablePseudoFullScreen);
+                    } else {
+                        disablePseudoFullScreen();
+                    }
+                }
+            } catch (err) {
+                if (slideContainer.classList.contains('pseudo-fullscreen')) {
+                    disablePseudoFullScreen();
+                } else {
+                    enablePseudoFullScreen();
+                }
+            }
+        }
+
+        function enablePseudoFullScreen() {
+            slideContainer.classList.add('pseudo-fullscreen');
+        }
+
+        function disablePseudoFullScreen() {
+            slideContainer.classList.remove('pseudo-fullscreen');
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+            if (e.key === 'Escape') {
+                if (document.fullscreenElement) {
+                   document.exitFullscreen();
+                }
+                disablePseudoFullScreen();
+            }
+        });
+
+        updateSlide();
+    </script>
+</body>
+</html>
